@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./nginx/
+    restart: always
+    ports:
+      - 80:80
+      - 2222:2222
+    depends_on: 
+      - mysql
+    volumes:
+       - ~/projects/drupal/:/var/www/sites/
+  
+  mysql:
+    container_name: mysql
+    image: mysql:5.7.26
+    # image: mysql:latest
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - databases:/var/lib/mysql
+      - drupal_files:/var/www/sites/
+
+volumes:
+  drupal_files:
+  databases:
