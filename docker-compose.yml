@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nginx:
-    container_name: nginx:latest
+    container_name: nginx
     build: ./nginx/
     restart: always
     ports:
@@ -15,15 +15,15 @@ services:
   
   mysql:
     container_name: mysql
-    # image: mysql:5.7.26
     image: mysql:latest
     restart: always
     ports:
       - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: drupaladm1n
     volumes:
-      - databases:/var/lib/mysql
+      - ~/projects/databases/:/var/lib/mysql
       - drupal_files:/var/www/sites/
 
 volumes:
